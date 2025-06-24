@@ -5,6 +5,7 @@ import Alert from '@mui/material/Alert';
 import FeedbackList from '../components/FeebackList';
 
 import CreateFeedback from '../components/CreateFeedback';
+import { BACKEND_BASE_URL } from '../config';
 
 export default function HomePage() {
   const [feedbackItems, setFeedbackItems] = useState([]);
@@ -25,7 +26,7 @@ export default function HomePage() {
     try {
       const queryString = new URLSearchParams(filterData).toString();
       const response = await fetch(
-        `http://localhost:3000/api/feedbacks?${queryString}`
+        `${BACKEND_BASE_URL}/api/feedbacks?${queryString}`
       );
       if (!response.ok) {
         throw new Error('Failed to fetch feedback');
@@ -49,7 +50,7 @@ export default function HomePage() {
   const handleUpvote = async id => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/feedbacks/${id}/upvote`,
+        `${BACKEND_BASE_URL}/api/feedbacks/${id}/upvote`,
         {
           method: 'PATCH',
           headers: {
@@ -71,7 +72,7 @@ export default function HomePage() {
   };
 
   const handleCreateFeedback = async formData => {
-    const response = await fetch('http://localhost:3000/api/feedbacks', {
+    const response = await fetch(`${BACKEND_BASE_URL}/api/feedbacks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
