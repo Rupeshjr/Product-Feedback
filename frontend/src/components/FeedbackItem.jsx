@@ -5,50 +5,55 @@ import Button from '@mui/material/Button';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import { Link } from 'react-router-dom';
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  marginBottom: '20px',
-  color: (theme.vars ?? theme).palette.text.secondary,
-  ...theme.applyStyles('dark', {
-    backgroundColor: '#1A2027',
-  }),
-}));
 export default function FeedbackItem({ item, handleUpVote }) {
   return (
-    <Item sx={{ width: '100%' }}>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid size={11}>
-          <Typography variant="h6" style={{ padding: '16px' }}>
-            {item.title}
-          </Typography>
-          <Typography variant="body2" style={{ padding: '16px' }}>
-            {item.description}
-          </Typography>
-          <Stack direction="row" spacing={1}>
-            <Chip label={item.status} />
-            <Chip label={item.category} />
-          </Stack>
-        </Grid>
-        <Grid size={1}>
-          <Button
-            onClick={() => handleUpVote(item._id)}
-            variant="contained"
-            endIcon={<ArrowUpwardIcon />}
-          >
-            {' '}
-            {item.upvote}
-          </Button>
-          <Button variant="outlined" href="#outlined-buttons">
-            Edit
-          </Button>
-        </Grid>
-      </Grid>
-    </Item>
+    <Card sx={{ minWidth: 275, margin: 1 }}>
+      <CardContent>
+        <Typography variant="h6">{item.title}</Typography>
+        <Typography
+          variant="body2"
+          sx={{
+            width: '200px',
+            height: '3em', // 1.5em * 2 lines
+            lineHeight: '1.5',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: 'inline-block', // respects height
+            verticalAlign: 'middle', // optional
+          }}
+        >
+          {item.description}
+        </Typography>
+        <Stack direction="row" spacing={1}>
+          <Chip label={item.status} />
+          <Chip label={item.category} />
+        </Stack>
+      </CardContent>
+      <CardActions>
+        <Button
+          onClick={() => handleUpVote(item._id)}
+          variant="contained"
+          endIcon={<ArrowUpwardIcon />}
+        >
+          {' '}
+          {item.upvote}
+        </Button>
+        <Link to={`/feedbacks/${item._id}`}>
+          <Button variant="outlined"> View</Button>
+        </Link>
+        <Button variant="outlined" href="#outlined-buttons">
+          Edit
+        </Button>
+      </CardActions>
+    </Card>
   );
 }

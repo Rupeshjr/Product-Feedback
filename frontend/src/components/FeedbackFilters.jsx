@@ -9,12 +9,11 @@ import Select from '@mui/material/Select';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
+  padding: theme.spacing(0.5), // Reduced padding
   textAlign: 'center',
   marginBottom: '20px',
   color: (theme.vars ?? theme).palette.text.secondary,
-  ...theme.applyStyles('dark', {
+  ...theme.applyStyles?.('dark', {
     backgroundColor: '#1A2027',
   }),
 }));
@@ -22,18 +21,21 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function FeedbackFilters({ filterData, handleFilterChange }) {
   return (
     <Box>
-      <Grid container spacing={2} fullWidth>
-        <Item>
-          <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+      <Grid container spacing={2}>
+        <Grid item>
+          <Item>
+            <FormControl fullWidth size="small">
+              <InputLabel id="status-label" sx={{ fontSize: '0.875rem' }}>
+                Status
+              </InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId="status-label"
+                id="status"
                 name="status"
                 value={filterData.status}
                 onChange={handleFilterChange}
                 label="Status"
+                sx={{ minHeight: 16, minWidth: 120 }}
               >
                 <MenuItem value={''}>All Status</MenuItem>
                 <MenuItem value={'open'}>Open</MenuItem>
@@ -42,20 +44,23 @@ export default function FeedbackFilters({ filterData, handleFilterChange }) {
                 <MenuItem value={'done'}>Done</MenuItem>
               </Select>
             </FormControl>
-          </Box>
-        </Item>
+          </Item>
+        </Grid>
 
-        <Item>
-          <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+        <Grid item>
+          <Item>
+            <FormControl fullWidth size="small">
+              <InputLabel id="category-label" sx={{ fontSize: '0.875rem' }}>
+                Category
+              </InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId="category-label"
+                id="category"
                 name="category"
                 value={filterData.category}
                 onChange={handleFilterChange}
                 label="Category"
+                sx={{ minHeight: 16, minWidth: 120 }}
               >
                 <MenuItem value={''}>All Categories</MenuItem>
                 <MenuItem value={'feature'}>Feature</MenuItem>
@@ -63,29 +68,31 @@ export default function FeedbackFilters({ filterData, handleFilterChange }) {
                 <MenuItem value={'ui'}>UI</MenuItem>
               </Select>
             </FormControl>
-          </Box>
-        </Item>
+          </Item>
+        </Grid>
 
-        <Item>
-          <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Sort By </InputLabel>
+        <Grid item>
+          <Item>
+            <FormControl fullWidth size="small">
+              <InputLabel id="sortby-label" sx={{ fontSize: '0.875rem' }}>
+                Sort By
+              </InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId="sortby-label"
+                id="sortby"
                 name="sort"
                 value={filterData.SortBy}
                 onChange={handleFilterChange}
                 label="Sort By"
+                sx={{ minHeight: 16, minWidth: 120 }}
               >
                 <MenuItem value={'asc'}>Ascending</MenuItem>
                 <MenuItem value={'desc'}>Descending</MenuItem>
               </Select>
             </FormControl>
-          </Box>
-        </Item>
+          </Item>
+        </Grid>
       </Grid>
     </Box>
   );
 }
-//feedbackFilters.jsx

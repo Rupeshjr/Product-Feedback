@@ -2,6 +2,7 @@
 import React from 'react';
 import FeedbackFilters from './FeedbackFilters';
 import FeedbackItem from './FeedbackItem';
+import { Stack } from '@mui/material';
 
 export default function FeedbackList({
   feedbackItems,
@@ -15,15 +16,16 @@ export default function FeedbackList({
         filterData={filterData}
         handleFilterChange={handleFilterChange}
       />
-      <div className="feedback-list">
+      <Stack direction={'row'} sx={{ flexWrap: 'wrap' }} spacing={0}>
         {feedbackItems.map(item => (
           <FeedbackItem
             key={item._id}
             item={item}
             handleUpVote={handleUpvote}
+            feedbacks={feedbackItems}
           />
         ))}
-      </div>
+      </Stack>
     </div>
   );
 }
