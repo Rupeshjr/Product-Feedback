@@ -10,25 +10,6 @@ This is a full-stack web application built with a **React** frontend and a **Nod
 - API Docs URL - https://product-feedback-i1eg.onrender.com/api/docs
 - Backend URL - https://product-feedback-i1eg.onrender.com
 
-Note:
-
-## 🚀 Deployment Notes (Render)
-
-This project is deployed using **Render** for both the frontend and backend.
-
-- **Backend:** Deployed on Render as a free web service.
-- **Frontend:** Also deployed on Render as a static site _(or web service, depending on setup)_.
-
-> ⚠️ **Important Note (Free Tier Limitation):**  
-> Render’s free instances will **spin down** after a period of inactivity.
->
-> This means:
->
-> - The **first request** after some idle time can take **up to 50 seconds or more** to respond.
-> - Subsequent requests will be fast once the service is "warmed up".
-
-If you notice a delay when first accessing the app or API, it's due to this startup time on the free tier.
-
 ## 🛠️ Tech Stack
 
 ### 🔹 Frontend
@@ -78,3 +59,26 @@ cd .\frontend\
 npm install
 npm run dev
 ```
+
+Note:
+
+## **MongoDB Atlas:**
+
+- The database is hosted on Free Version of MongoDB Atlas, providing a secure and scalable cloud-based NoSQL solution.
+
+## 🚀 Deployment Notes (Render)
+
+This project is deployed using **Render** for both the frontend and backend.
+
+- **Backend:** Deployed on Render as a free web service.
+- **Frontend:** Also deployed on Render as a static site _(or web service, depending on setup)_.
+
+> ⚠️ **Important Note (Free Tier Limitation):**  
+> Render’s free instances will **spin down** after a period of inactivity.
+>
+> This means:
+>
+> - The **first request** after some idle time can take **up to 50 seconds or more** to respond.
+> - Subsequent requests will be fast once the service is "warmed up".
+
+If you notice a delay when first accessing the app or API, it's due to this startup time on the free tier.
