@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 
 export default function FeedbackItem({ item, handleUpVote }) {
   return (
-    <Card sx={{ minWidth: 275, margin: 1 }}>
+    <Card sx={{ minWidth: 275, marginBottom: 2, marginRight: 2 }}>
       <CardContent>
         <Typography variant="h6">{item.title}</Typography>
         <Typography
@@ -50,9 +50,6 @@ export default function FeedbackItem({ item, handleUpVote }) {
         <Link to={`/feedbacks/${item._id}`}>
           <Button variant="outlined"> View</Button>
         </Link>
-        <Button variant="outlined" href="#outlined-buttons">
-          Edit
-        </Button>
       </CardActions>
     </Card>
   );
