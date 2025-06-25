@@ -1,4 +1,4 @@
-# 📦 Full-Stack Feedback App
+# 📦 FeedbackHub APP
 
 This is a full-stack web application built with a **React** frontend and a **Node.js + Express** backend using **MongoDB** as the database. It allows users to create and view feedback items.
 

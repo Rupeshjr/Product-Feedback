@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Product Feedback Board API",
+    "title": "FeedbackHub API",
     "version": "1.0.0",
     "description": "API for submitting and viewing product feedback"
   },
