@@ -8,139 +8,18 @@
   "servers": [
     {
       "url": "https://product-feedback-i1eg.onrender.com/api",
-      "description": "Local server"
+      "description": "Render server"
     }
   ],
-  "paths": {
-    "/feedbacks": {
-      "get": {
-        "summary": "Get all feedbacks",
-        "parameters": [
-          {
-            "name": "status",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": ["Open", "Planned", "In Progress", "Done"]
-            },
-            "description": "Filter feedbacks by status"
-          },
-          {
-            "name": "category",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": ["Feature", "Bug", "UI"]
-            },
-            "description": "Filter feedbacks by category"
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": ["asc", "desc"]
-            },
-            "description": "Sort feedbacks by createdAt (asc or desc)"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of feedbacks",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "feedbacks": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Feedback"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Submit new feedback",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewFeedback"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Feedback created successfully"
-          }
-        }
-      }
-    },
-    "/feedbacks/{id}": {
-      "get": {
-        "summary": "Get a single feedback by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A single feedback item",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Feedback"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Feedback not found"
-          }
-        }
-      }
-    },
-    "/feedbacks/{id}/upvote": {
-      "patch": {
-        "summary": "Increment upvote count",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Upvote count incremented"
-          },
-          "404": {
-            "description": "Feedback not found"
-          }
-        }
-      }
-    }
-  },
   "components": {
+    "securitySchemes": {
+      "ApiTokenAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Static token to be passed as the value of the Authorization header"
+      }
+    },
     "schemas": {
       "Feedback": {
         "type": "object",
@@ -196,6 +75,160 @@
           }
         },
         "required": ["title", "description", "category"]
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiTokenAuth": []
+    }
+  ],
+  "paths": {
+    "/feedbacks": {
+      "get": {
+        "summary": "Get all feedbacks",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["Open", "Planned", "In Progress", "Done"]
+            },
+            "description": "Filter feedbacks by status"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["Feature", "Bug", "UI"]
+            },
+            "description": "Filter feedbacks by category"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"]
+            },
+            "description": "Sort feedbacks by createdAt (asc or desc)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of feedbacks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "feedbacks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Feedback"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiTokenAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Submit new feedback",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewFeedback"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Feedback created successfully"
+          }
+        },
+        "security": [
+          {
+            "ApiTokenAuth": []
+          }
+        ]
+      }
+    },
+    "/feedbacks/{id}": {
+      "get": {
+        "summary": "Get a single feedback by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single feedback item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Feedback"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Feedback not found"
+          }
+        },
+        "security": [
+          {
+            "ApiTokenAuth": []
+          }
+        ]
+      }
+    },
+    "/feedbacks/{id}/upvote": {
+      "patch": {
+        "summary": "Increment upvote count",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Upvote count incremented"
+          },
+          "404": {
+            "description": "Feedback not found"
+          }
+        },
+        "security": [
+          {
+            "ApiTokenAuth": []
+          }
+        ]
       }
     }
   }

@@ -8,6 +8,8 @@ import {
   CircularProgress,
 } from '@mui/material';
 
+import { AUTH_TOKEN, BACKEND_BASE_URL } from '../config';
+
 function ViewFeedback() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -17,7 +19,11 @@ function ViewFeedback() {
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/feedbacks/${id}`);
+        const res = await fetch(`${BACKEND_BASE_URL}/api/feedbacks/${id}`, {
+          headers: {
+            Authorization: AUTH_TOKEN,
+          },
+        });
         if (!res.ok) {
           throw new Error('Failed to fetch feedback');
         }

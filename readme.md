@@ -59,6 +59,7 @@ cd Product-Feedback
 
 - create .env file and add the following environmental variables
 - MONGO_URI
+- AUTH_TOKEN
 
 ```bash
 cd .\backend\
@@ -70,6 +71,7 @@ npm run dev
 
 - Add the following environmental variables in .env file
 - VITE_BACKEND_BASE_URL
+- VITE_AUTH_TOKEN
 
 ```bash
 cd .\frontend\

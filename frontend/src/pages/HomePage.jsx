@@ -5,7 +5,7 @@ import Alert from '@mui/material/Alert';
 import FeedbackList from '../components/FeebackList';
 
 import CreateFeedback from '../components/CreateFeedback';
-import { BACKEND_BASE_URL } from '../config';
+import { BACKEND_BASE_URL, AUTH_TOKEN } from '../config';
 
 export default function HomePage() {
   const [feedbackItems, setFeedbackItems] = useState([]);
@@ -25,9 +25,16 @@ export default function HomePage() {
   const fetchFeedbacks = async () => {
     try {
       const queryString = new URLSearchParams(filterData).toString();
+
       const response = await fetch(
-        `${BACKEND_BASE_URL}/api/feedbacks?${queryString}`
+        `${BACKEND_BASE_URL}/api/feedbacks?${queryString}`,
+        {
+          headers: {
+            Authorization: AUTH_TOKEN, // replace with actual token or env variable
+          },
+        }
       );
+
       if (!response.ok) {
         throw new Error('Failed to fetch feedback');
       }
@@ -55,6 +62,7 @@ export default function HomePage() {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: AUTH_TOKEN,
           },
         }
       );
@@ -76,6 +84,7 @@ export default function HomePage() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: AUTH_TOKEN,
       },
       body: JSON.stringify(formData),
     });
