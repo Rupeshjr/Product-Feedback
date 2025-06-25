@@ -1,0 +1,202 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Product Feedback Board API",
+    "version": "1.0.0",
+    "description": "API for submitting and viewing product feedback"
+  },
+  "servers": [
+    {
+      "url": "https://product-feedback-i1eg.onrender.com/api",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/feedbacks": {
+      "get": {
+        "summary": "Get all feedbacks",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["Open", "Planned", "In Progress", "Done"]
+            },
+            "description": "Filter feedbacks by status"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["Feature", "Bug", "UI"]
+            },
+            "description": "Filter feedbacks by category"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"]
+            },
+            "description": "Sort feedbacks by createdAt (asc or desc)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of feedbacks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "feedbacks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Feedback"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Submit new feedback",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewFeedback"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Feedback created successfully"
+          }
+        }
+      }
+    },
+    "/feedbacks/{id}": {
+      "get": {
+        "summary": "Get a single feedback by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single feedback item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Feedback"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Feedback not found"
+          }
+        }
+      }
+    },
+    "/feedbacks/{id}/upvote": {
+      "patch": {
+        "summary": "Increment upvote count",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Upvote count incremented"
+          },
+          "404": {
+            "description": "Feedback not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Feedback": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["Feature", "Bug", "UI"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Open", "Planned", "In Progress", "Done"]
+          },
+          "upvotes": {
+            "type": "integer"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "description",
+          "category",
+          "status",
+          "upvotes",
+          "createdAt"
+        ]
+      },
+      "NewFeedback": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["Feature", "Bug", "UI"]
+          }
+        },
+        "required": ["title", "description", "category"]
+      }
+    }
+  }
+}
